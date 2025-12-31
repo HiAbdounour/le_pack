@@ -1,2 +1,2 @@
-# le_pack
-Le bundle contenant tous les jeux de la série Le Pack !
+# Le Pack
+Mettre le repo public lorsque l'on aura TOUT fusionné !
