@@ -251,3 +251,17 @@ class Button:
                 and self.rect[1]-(self.size[1]//2)<=pos.y<=self.rect[1]+(self.size[1]//2)):
             return self.info
         return -1
+
+# ============== NOT IN NOORMI ================
+def add_pts(pts):
+    """
+    Add points to the existing score
+    """
+    with open('ressources/points.txt','r') as file:
+        actualpts = int(file.read())
+    try:
+        with open('ressources/points.txt','w') as file:
+            file.write(str(actualpts+pts))
+    except:
+        with open('ressources/points.txt','w') as file:
+            file.write(str(actualpts))

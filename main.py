@@ -57,6 +57,8 @@ while RUNNING:
     if not MAIN_MENU:
         clear_window(PYGAME_GRAY)
         MAIN_MENU = GAMES[game_nb][1]()
+        clear_window(PYGAME_GRAY)
+        choose_your_game = build_main_menu()
 
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
