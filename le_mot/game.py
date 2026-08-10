@@ -36,12 +36,15 @@ def build_level(lvl):
 def print_menu():
     display_text("Le Mot",("Comic sans MS",90),(95,80),text_bold=True)
     buttons_list = []
+    display_text("Jouer avec des mots de",("Comic sans MS",25),(105,230),text_bold=True)
+    display_text("lettres",("Comic sans MS",25),(205,330),text_bold=True)
     for i in range(3,7):
-        display_text("Jouer avec des mots de",("Comic sans MS",25),(105,230),text_bold=True)
-        display_text("lettres",("Comic sans MS",25),(205,330),text_bold=True)
         b = Button(i,(100*(i-2),300,pygame.Color(60,60,60)),(50,50),(str(i),100*(i-2)-13,275,PYGAME_WHITE))
         buttons_list.append(b)
         b.display()
+    bq = Button(0,(250,400,pygame.Color(60,60,60)),(50,50),('<-',230,375,PYGAME_WHITE))
+    bq.display()
+    buttons_list.append(bq)
     return buttons_list
 
 def choice_level(list_buttons,pos):
@@ -100,13 +103,17 @@ def choose_menu():
     lvl = -1
     while lvl==-1:
         lvl = choice_level(lvl_choices,wait_clic())
-    play(build_level(lvl))
+    if lvl==0:
+        return True
+    pts = play(build_level(lvl))
+    add_pts(pts)
     return False
 
 def play(chosen_word):
     global alpha, VALID_WORDS, CLR_LETTERS
     actual_word = ""
     i = 0
+    trials = 0
     n = len(chosen_word)
     finished = False
     found = False
@@ -132,6 +139,7 @@ def play(chosen_word):
                     actual_word = actual_word[:len(actual_word)-1]
                 # verify a word
                 elif k == "RETURN" and len(actual_word)==len(chosen_word):
+                    trials+=1
                     if actual_word in VALID_WORDS:
                         found = check(actual_word,chosen_word,i)
                         actual_word=""
@@ -157,5 +165,4 @@ def play(chosen_word):
     # reset for next match
     VALID_WORDS = []
     CLR_LETTERS = {chr:PYGAME_GRAY for chr in alpha}
-
-    return
+    return n*(7-trials) if found else 0

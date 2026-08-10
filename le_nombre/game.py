@@ -29,13 +29,16 @@ def choice_level(list_buttons,pos):
 
 def build_menu():
     display_text("Le Nombre",("Comic sans MS",90),(15,80),text_bold=True)
+    display_text("Chercher des nombres de",("Comic sans MS",25),(105,230),text_bold=True)
+    display_text("chiffres",("Comic sans MS",25),(205,330),text_bold=True)
     buttons_list = []
     for i in range(3,7):
-        display_text("Chercher des nombres de",("Comic sans MS",25),(105,230),text_bold=True)
-        display_text("chiffres",("Comic sans MS",25),(205,330),text_bold=True)
         b = Button(i-2,(100*(i-2),300,pygame.Color(60,60,60)),(50,50),(str(i-2),100*(i-2)-13,275,PYGAME_WHITE))
         buttons_list.append(b)
         b.display()
+    bq = Button(0,(250,400,pygame.Color(60,60,60)),(50,50),('<-',230,375,PYGAME_WHITE))
+    bq.display()
+    buttons_list.append(bq)
     return buttons_list
 
 def choose_number():
@@ -77,16 +80,19 @@ def play():
     lvl = -1
     while lvl==-1:
         lvl = choice_level(lvl_list,wait_clic())
-    print(lvl)
+    if lvl==0:
+        return True
     change_difficulty(lvl)
     clear_window(PYGAME_GRAY)
     reset_memos()
 
     nb = choose_number()
     found = False
+    cpt = 0
     while not found:
         found = logic(nb)
-        print(found)
+        cpt+=1
+    add_pts((lvl-1)*10+3-cpt)
     pygame.time.delay(1000)
     return False
 
